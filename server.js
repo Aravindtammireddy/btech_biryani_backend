@@ -13,7 +13,7 @@ dotenv.config({path : './config/config.env'});
 const http = require('http').Server(app)
 const io = require('socket.io')(http,{
     cors: {
-        origin: "http://localhost:3000",
+        origin: "https://btech-biryani.onrender.com",
         methods: ["GET", "POST"]
     }
 });
