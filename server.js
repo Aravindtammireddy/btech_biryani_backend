@@ -26,14 +26,14 @@ io.on("connection", (socket) => {
     console.log("New client connected");
    
     socket.on("stockchange",async (varia)=>{
-        console.log(varia)
+      //  console.log(varia)
         await Stock.findOneAndUpdate({name : varia[0].name}, {quantity : varia[0].count});
         await Stock.findOneAndUpdate({name : varia[1].name}, {quantity : varia[1].count});
         io.emit("new_stock");
     })
    
     socket.on("disconnect", () => {
-      console.log("Client disconnected");
+     console.log("Client disconnected");
     });
 
   }); 
@@ -48,7 +48,7 @@ app.post('/api/v1/orders' , (req, res)=>{
         let user1;
          user.save()
         .then(user => {user1 = user;
-            console.log(`new order added`);
+           // console.log(`new order added`);
              res.status(200).send(user1);})
         .catch(err => console.log(err));
 })
@@ -66,7 +66,7 @@ app.get('/api/v1/orders', async (req, res)=>{
 
 app.get(`/api/v1/stocks/:name`,async (req,res) => {
     try{
-        console.log(req.params.name)
+       // console.log(req.params.name)
         const stock = await Stock.find({name : req.params.name})
        // console.log(stock)
         res.status(200).json(stock);
@@ -90,7 +90,7 @@ app.post('/api/v1/stocks',async (req,res) => {
 
 app.put('/api/v1/orders/updateprogress/:id',async(req,res)=>{
     try{
-        console.log(req.params.id,"printing id")
+      //  console.log(req.params.id,"printing id")
         const order=await User.findByIdAndUpdate({_id:req.params.id},{progress:req.body.progress}).then((res)=>{console.log(res)})
         res.status(200).json("update success")
     }
