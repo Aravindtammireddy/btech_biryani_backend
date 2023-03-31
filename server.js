@@ -99,7 +99,15 @@ app.put('/api/v1/orders/updateprogress/:id',async(req,res)=>{
     }
 })
 
-
+app.get('/deleteorders',(req,res)=>{
+    User.deleteMany({}).then(function(){
+        console.log("All the orders deleted"); // Success
+        res.status(200).json("success");
+     }).catch(function(error){
+        console.log(error); // Failure
+        res.status(501).json("failure");
+     });
+})
 const PORT = process.env.PORT || 5000;
 
 http.listen(PORT);
