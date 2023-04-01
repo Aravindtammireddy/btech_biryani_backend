@@ -80,7 +80,6 @@ app.post('/api/v1/stocks',async (req,res) => {
     let user1;
      stock.save()
     .then(user => {user1 = user;
-        console.log(`new stock added`);
          res.status(200).send(user1);})
     .catch(err => console.log(err));
   
@@ -89,7 +88,7 @@ app.post('/api/v1/stocks',async (req,res) => {
 app.put('/api/v1/orders/updateprogress/:id',async(req,res)=>{
     try{
     
-        const order=await User.findByIdAndUpdate({_id:req.params.id},{progress:req.body.progress}).then((res)=>{console.log(res)})
+        const order=await User.findByIdAndUpdate({_id:req.params.id},{progress:req.body.progress})
         res.status(200).json("update success")
     }
     catch(er){
