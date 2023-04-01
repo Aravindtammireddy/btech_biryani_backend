@@ -23,18 +23,16 @@ app.use(express.json());
 
 //socket io
 io.on("connection", (socket) => {
-    console.log("New client connected");
+   
    
     socket.on("stockchange",async (varia)=>{
-      //  console.log(varia)
+     
         await Stock.findOneAndUpdate({name : varia[0].name}, {quantity : varia[0].count});
         await Stock.findOneAndUpdate({name : varia[1].name}, {quantity : varia[1].count});
         io.emit("new_stock");
     })
    
-    socket.on("disconnect", () => {
-     console.log("Client disconnected");
-    });
+   
 
   }); 
 
@@ -43,12 +41,12 @@ io.on("connection", (socket) => {
 app.get('/',(req,res)=> res.status(200).json('hello user'));
 
 app.post('/api/v1/orders' , (req, res)=>{
-    //console.log(req.body);
+   
     const user = new User({name : req.body.name, hostel : req.body.hostel, phonenumber : req.body.phonenumber , slot : req.body.slot ,progress:false, transactionID : req.body.transactionID , items:req.body.items});
         let user1;
          user.save()
         .then(user => {user1 = user;
-           // console.log(`new order added`);
+          
              res.status(200).send(user1);})
         .catch(err => console.log(err));
 })
@@ -56,7 +54,7 @@ app.post('/api/v1/orders' , (req, res)=>{
 app.get('/api/v1/orders', async (req, res)=>{
     try{
     const orders =await User.find({ });
-    //console.log(orders);
+   
     res.status(200).json(orders);
     }
     catch{
@@ -66,9 +64,9 @@ app.get('/api/v1/orders', async (req, res)=>{
 
 app.get(`/api/v1/stocks/:name`,async (req,res) => {
     try{
-       // console.log(req.params.name)
+     
         const stock = await Stock.find({name : req.params.name})
-       // console.log(stock)
+     
         res.status(200).json(stock);
         }
         catch{
@@ -90,7 +88,7 @@ app.post('/api/v1/stocks',async (req,res) => {
 
 app.put('/api/v1/orders/updateprogress/:id',async(req,res)=>{
     try{
-      //  console.log(req.params.id,"printing id")
+    
         const order=await User.findByIdAndUpdate({_id:req.params.id},{progress:req.body.progress}).then((res)=>{console.log(res)})
         res.status(200).json("update success")
     }
@@ -101,10 +99,10 @@ app.put('/api/v1/orders/updateprogress/:id',async(req,res)=>{
 
 app.get('/deleteorders',(req,res)=>{
     User.deleteMany({}).then(function(){
-        console.log("All the orders deleted"); // Success
+       // Success
         res.status(200).json("success");
      }).catch(function(error){
-        console.log(error); // Failure
+        // Failure
         res.status(501).json("failure");
      });
 })
